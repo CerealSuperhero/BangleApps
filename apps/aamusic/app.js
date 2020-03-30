@@ -112,7 +112,7 @@ if (next) {
             setTimeout(drawAppVolume, 1000);
             up(() => { });
         }
-    }, BTN1, { edge: "falling", repeat: true, debounce: 50 });
+    }, BTN1, { edge: "rising", repeat: true, debounce: 50 });
 
     setWatch(function (e) {
         if (changeTrack) {
@@ -125,7 +125,7 @@ if (next) {
             setTimeout(drawAppVolume, 1000);
             down(() => { });
         }
-    }, BTN3, { edge: "falling", repeat: true, debounce: 50 });
+    }, BTN3, { edge: "rising", repeat: true, debounce: 50 });
 
     setWatch(function (e) {
         if (changeTrack) {
@@ -137,7 +137,7 @@ if (next) {
             setTimeout(drawAppVolume, 1000);
             toggle();
         }
-    }, BTN2, { edge: "falling", repeat: true, debounce: 50 });
+    }, BTN2, { edge: "rising", repeat: true, debounce: 50 });
 
     drawApp();
 }
