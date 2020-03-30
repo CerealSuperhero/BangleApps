@@ -14,6 +14,7 @@ var toggleControls = function () {
 var resetControls = function () {
     changeTrack = true;
     E.showMessage('reset');
+    setTimeout(drawApp, 1000);
 }
 
 var setTimer = function () {
