@@ -29,7 +29,7 @@ var resetTimer = function () {
 }
 
 if (settings.HID) {
-    profile = 'Music';
+    profile = 'Track';
     sendHid = function (code, cb) {
         try {
             NRF.sendHIDReport([1, code], () => {
