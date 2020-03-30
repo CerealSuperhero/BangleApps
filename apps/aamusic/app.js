@@ -20,7 +20,7 @@ var resetControls = function () {
 }
 
 var setTimer = function () {
-    timer = setTimeout(resetControls, 5000);
+    timer = setTimeout(resetControls, 2000);
 }
 
 var resetTimer = function () {

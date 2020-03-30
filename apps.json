@@ -880,7 +880,7 @@
     "name": "Aamusic",
     "shortName":"aamusic",
     "icon": "app.png",
-    "version":"0.05",
+    "version":"0.06",
     "description": "pebble-like music controls",
     "tags": "tool",
     "storage": [
