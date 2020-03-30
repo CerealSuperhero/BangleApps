@@ -87,7 +87,7 @@
       {"name":"mclock.app.js","url":"clock-morphing.js"},
       {"name":"mclock.img","url":"clock-morphing-icon.js","evaluate":true}
     ],
-    "sortorder" : -9
+    "sortorder" : -8
   },
   { "id": "setting",
     "name": "Settings",
@@ -886,6 +886,7 @@
     "storage": [
       {"name":"aamusic.app.js","url":"app.js"},
       {"name":"aamusic.img","url":"app-icon.js","evaluate":true}
-    ]
+    ],
+    "sortorder":-9
   }
 ]
