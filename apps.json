@@ -880,12 +880,12 @@
     "name": "Aamusic",
     "shortName":"aamusic",
     "icon": "app.png",
-    "version":"0.01",
+    "version":"0.02",
     "description": "pebble-like music controls",
     "tags": "",
     "storage": [
-      {"name":"timer.app.js","url":"app.js"},
-      {"name":"timer.img","url":"app-icon.js","evaluate":true}
+      {"name":"aamusic.app.js","url":"app.js"},
+      {"name":"aamusic.img","url":"app-icon.js","evaluate":true}
     ]
   }
 ]
