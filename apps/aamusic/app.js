@@ -8,13 +8,15 @@ var changeTrack = true;
 
 var toggleControls = function () {
     changeTrack = false;
+    //E.showMessage('Volume');
     setTimer();
 }
 
 var resetControls = function () {
     changeTrack = true;
-    E.showMessage('reset');
-    setTimeout(drawApp, 1000);
+    //E.showMessage('reset');
+    drawApp();
+    //setTimeout(drawApp, 1000);
 }
 
 var setTimer = function () {
@@ -70,6 +72,34 @@ function drawApp() {
     g.drawImage(c([0, 8, 12, 14, 255, 14, 12, 8]), d, 116);
 }
 
+
+function drawAppVolume() {
+    g.clear();
+    g.setFont("6x8", 2);
+    g.setFontAlign(0, 0);
+    g.drawString("volume", 120, 120);
+    const d = g.getWidth() - 18;
+
+    function c(a) {
+        return {
+            width: 8,
+            height: a.length,
+            bpp: 1,
+            buffer: (new Uint8Array(a)).buffer
+        };
+    }
+
+    g.drawImage(c([0, 8, 12, 14, 15, 14, 12, 8]), d-10, 116);
+    g.drawImage(c([102, 102, 102, 102, 102, 102, 102, 102]), d, 116);
+
+
+    g.drawImage(c([4, 34, 105, 229, 225, 105, 34, 4]), d, 40);
+
+    g.drawImage(c([0, 32, 104, 228, 228, 104, 32, 0]), d, 194);
+
+
+}
+
 if (next) {
     setWatch(function (e) {
         if (changeTrack) {
@@ -79,7 +109,7 @@ if (next) {
         } else {
             resetTimer();
             E.showMessage('up');
-            setTimeout(drawApp, 1000);
+            setTimeout(drawAppVolume, 1000);
             up(() => { });
         }
     }, BTN1, { edge: "falling", repeat: true, debounce: 50 });
@@ -92,7 +122,7 @@ if (next) {
         } else {
             resetTimer();
             E.showMessage('down');
-            setTimeout(drawApp, 1000);
+            setTimeout(drawAppVolume, 1000);
             down(() => { });
         }
     }, BTN3, { edge: "falling", repeat: true, debounce: 50 });
@@ -100,13 +130,27 @@ if (next) {
     setWatch(function (e) {
         if (changeTrack) {
             toggleControls();
+            drawAppVolume();
         } else {
             resetTimer();
             E.showMessage('play/pause')
-            setTimeout(drawApp, 1000);
+            setTimeout(drawAppVolume, 1000);
             toggle();
         }
     }, BTN2, { edge: "falling", repeat: true, debounce: 50 });
 
     drawApp();
 }
+
+/* play pause symbol 
+g.drawImage(c([0, 8, 12, 14, 15, 14, 12, 8]), d-10, 116);
+g.drawImage(c([102, 102, 102, 102, 102, 102, 102, 102]), d, 116);
+ */
+
+ /* vol up 
+ g.drawImage(c([4, 34, 105, 229, 225, 105, 34, 4]), d, 40);
+  */
+
+/* vol down 
+g.drawImage(c([0, 32, 104, 228, 228, 104, 32, 0]), d, 194);
+ */
