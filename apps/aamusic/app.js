@@ -162,3 +162,27 @@ g.drawImage(c([0, 32, 104, 228, 228, 104, 32, 0]), d, 194);
   /* skip back
   g.drawImage(c([17, 51, 119, 255, 199, 51, 17, 0]), d, 40);
    */
+
+
+   /* press and hold volume buttons attmpted in teverted commit
+   
+
+   var down=function(){
+  g=setInterval(function(){ console.log("Down");}, 500);
+}
+
+
+var stop=function(){
+  clearInterval(g);
+}
+
+https://www.espruino.com/Reference#l__global_setWatch
+
+TODO:
+change buttons to rising edge
+for volume,  make buttons call set interval that repeatedly changes volume
+clear interval on button release
+
+(change buttons to match pebble?) skip = traingle +line ( >| forward    |< backward) and tripple dots for middle?
+   
+   */
