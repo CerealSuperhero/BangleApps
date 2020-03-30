@@ -2,19 +2,18 @@ var storage = require('Storage');
 
 const settings = storage.readJSON('setting.json', 1) || { HID: false };
 
-var sendHid, next, prev, toggle, up, down, profile, timer;
+var sendHid, next, prev, toggle, up, down, profile, timer, volumeChanger,currentVolumeAction;
 var changeTrack = true;
 
 
 var toggleControls = function () {
     changeTrack = false;
-    //E.showMessage('Volume');
     setTimer();
 }
 
 var resetControls = function () {
     changeTrack = true;
-    //E.showMessage('reset');
+    clearInterval(volumeChanger);
     drawApp();
     //setTimeout(drawApp, 1000);
 }
@@ -27,6 +26,42 @@ var resetTimer = function () {
     clearTimeout(timer);
     setTimer();
 }
+
+var volumeDown = function () {
+    currentVolumeAction="down";
+    clearInterval(volumeChanger);
+    drawAppVolume("down");
+    volumeChanger = setInterval(function () {
+        resetTimer();
+        down(() => { });
+    }, 500);
+}
+
+var stopVolumeDown=function(){
+    if (currentVolumeAction=="down") {
+        clearInterval(volumeChanger);
+        drawAppVolume("volume");
+    }
+  }
+
+
+
+  var volumeUp = function () {
+    currentVolumeAction="up";
+    clearInterval(volumeChanger);
+    drawAppVolume("up");
+    volumeChanger = setInterval(function () {
+        resetTimer();
+        up(() => { });
+    }, 500);
+}
+
+var stopVolumeUp=function(){
+    if (currentVolumeAction=="up") {
+        clearInterval(volumeChanger);
+        drawAppVolume("volume");
+    }
+  }
 
 if (settings.HID) {
     profile = 'Track';
@@ -73,11 +108,11 @@ function drawApp() {
 }
 
 
-function drawAppVolume() {
+function drawAppVolume(display) {
     g.clear();
     g.setFont("6x8", 2);
     g.setFontAlign(0, 0);
-    g.drawString("volume", 120, 120);
+    g.drawString(display, 120, 120);
     const d = g.getWidth() - 18;
 
     function c(a) {
@@ -108,10 +143,12 @@ if (next) {
             prev(() => { });
         } else {
             resetTimer();
-            E.showMessage('up');
-            setTimeout(drawAppVolume, 1000);
-            up(() => { });
+            volumeUp();
         }
+    }, BTN1, { edge: "rising", repeat: true, debounce: 50 });
+
+    setWatch(function (e) {
+            stopVolumeUp();
     }, BTN1, { edge: "falling", repeat: true, debounce: 50 });
 
     setWatch(function (e) {
@@ -121,23 +158,26 @@ if (next) {
             next(() => { });
         } else {
             resetTimer();
-            E.showMessage('down');
-            setTimeout(drawAppVolume, 1000);
-            down(() => { });
+            volumeDown();
         }
+    }, BTN3, { edge: "rising", repeat: true, debounce: 50 });
+
+    setWatch(function (e) {
+        resetTimer();
+        stopVolumeDown();
     }, BTN3, { edge: "falling", repeat: true, debounce: 50 });
 
     setWatch(function (e) {
         if (changeTrack) {
             toggleControls();
-            drawAppVolume();
+            drawAppVolume("volume");
         } else {
             resetTimer();
             E.showMessage('play/pause')
-            setTimeout(drawAppVolume, 1000);
+            setTimeout(drawAppVolume("volume"), 1000);
             toggle();
         }
-    }, BTN2, { edge: "falling", repeat: true, debounce: 50 });
+    }, BTN2, { edge: "rising", repeat: true, debounce: 50 });
 
     drawApp();
 }
@@ -161,4 +201,28 @@ g.drawImage(c([0, 32, 104, 228, 228, 104, 32, 0]), d, 194);
 
   /* skip back
   g.drawImage(c([17, 51, 119, 255, 199, 51, 17, 0]), d, 40);
+   */
+
+
+   /* press and hold volume buttons 
+   
+
+   var down=function(){
+  g=setInterval(function(){ console.log("Down");}, 500);
+}
+
+
+var stop=function(){
+  clearInterval(g);
+}
+
+https://www.espruino.com/Reference#l__global_setWatch
+
+TODO:
+change buttons to rising edge
+for volume,  make buttons call set interval that repeatedly changes volume
+clear interval on button release
+
+(change buttons to match pebble?) skip = traingle +line ( >| forward    |< backward) and tripple dots for middle?
+   
    */
